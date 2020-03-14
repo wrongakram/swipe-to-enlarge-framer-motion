@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap");
+//colors
+$black: #424243;
+$red: #fc3f4e;
+$white: #ffffff;
+
+html,
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #e5e5e5;
+  color: $black;
+  letter-spacing: -0.015rem;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+//Header
+.header {
+  height: 72px;
+  .header-inner {
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      .logo {
+        font-weight: 800;
+      }
+      .hamburger-menu {
+        width: 24px;
+        span {
+          display: block;
+          background: $black;
+          height: 2px;
+          width: 24px;
+          margin-bottom: 5px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+//BreadCrumb
+.breadcrumb {
+  height: 72px;
+  border-top: 1px solid rgba(66, 66, 67, 0.2);
+  border-bottom: 1px solid rgba(66, 66, 67, 0.2);
+  .breadcrumb-inner {
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .breadcrumb-links {
+      display: flex;
+      .breadcrumb-link {
+        font-size: 14px;
+        opacity: 0.5;
+        &:first-child:after {
+          content: ">";
+          margin: 0 16px;
+        }
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+//product overview
+.product {
+  .product-inner {
+    padding: 0 32px;
+    .product-content {
+      padding: 72px 0 24px;
+      .product-content-inner {
+        h4 {
+          font-size: 14px;
+          margin: 0 0 16px 0;
+          line-height: 1;
+        }
+        h1 {
+          font-size: 50px;
+          font-weight: 700;
+          margin: 0 0 24px 0;
+          line-height: 1;
+        }
+        p {
+          font-size: 14px;
+        }
+        .btn-row {
+          margin-top: 32px;
+          button {
+            height: 56px;
+            padding: 0 24px;
+            background: $red;
+            color: $white;
+            border: none;
+            font-size: 14px;
+            line-height: 1;
+          }
+        }
+      }
+    }
+  }
+  .product-slide-enlarge {
+    position: relative;
+    height: 700px;
+    .background {
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      background: $black;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+      opacity: 0;
+    }
+    .product-image {
+      z-index: 8;
+      position: absolute;
+    }
+  }
+}
