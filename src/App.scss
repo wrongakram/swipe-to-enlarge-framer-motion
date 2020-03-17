@@ -125,21 +125,144 @@ code {
   }
   .product-slide-enlarge {
     position: relative;
-    height: 700px;
+
     .background {
       position: fixed;
-      height: 100%;
+      height: 100vh;
       width: 100%;
-      background: $black;
+      background: #636363;
       top: 0;
       left: 0;
       bottom: 0;
       z-index: 1;
       opacity: 0;
+      overflow-y: hidden;
     }
-    .product-image {
-      z-index: 8;
-      position: absolute;
+    .product-drag-header {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      z-index: 22;
+      top: 0;
+      padding: 24px 32px;
+      .company-name {
+        color: $white;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .close {
+        color: $white;
+        font-size: 1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        width: 100px;
+        height: 100px;
+        justify-content: center;
+      }
+    }
+
+    .product-container {
+      position: relative;
+      height: 540px;
+
+      .product-image {
+        z-index: 8;
+        position: absolute;
+      }
+    }
+
+    .product-drag {
+      z-index: 99;
+      position: relative;
+      margin-bottom: 40px;
+      .product-drag-inner {
+        padding: 0 32px;
+        .product-drag-label {
+          display: flex;
+          justify-content: flex-end;
+          h6 {
+            font-size: 14px;
+            margin: 0;
+            margin-bottom: 24px;
+          }
+        }
+        .product-drag-progress-background {
+          width: 100%;
+          height: 1px;
+          background: rgba(66, 66, 67, 0.2);
+          position: relative;
+          .product-drag-progress {
+            width: 0%;
+            height: 1px;
+            background: $white;
+            position: absolute;
+            z-index: 2;
+            right: 0;
+          }
+        }
+      }
     }
   }
+}
+
+//specs
+.spec {
+  .spec-inner {
+    padding: 0 32px;
+    .spec-header {
+      h5 {
+        font-size: 16px;
+        line-height: 24px;
+        padding-bottom: 24px;
+        position: relative;
+        &:after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          width: 32px;
+          background: $red;
+          bottom: 4px;
+          left: 0;
+        }
+      }
+    }
+    ul {
+      padding: 0;
+      margin: 0;
+      li {
+        padding: 0;
+        list-style: none;
+        height: 60px;
+        padding: 6px 0;
+        border-top: 1px solid rgba(66, 66, 67, 0.2);
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;
+        .spec-label {
+          color: rgba(66, 66, 67, 0.6);
+          font-weight: 300;
+          height: 24px;
+        }
+        .spec-content {
+          height: 24px;
+          color: $black;
+          &.red {
+            color: $red;
+          }
+        }
+      }
+    }
+  }
+}
+
+.no-scroll {
+  overflow: hidden;
 }
