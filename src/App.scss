@@ -110,6 +110,9 @@ code {
         }
         .btn-row {
           margin-top: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           button {
             height: 56px;
             padding: 0 24px;
@@ -118,6 +121,9 @@ code {
             border: none;
             font-size: 14px;
             line-height: 1;
+          }
+          svg {
+            margin-right: 24px;
           }
         }
       }
@@ -148,6 +154,7 @@ code {
       z-index: 22;
       top: 0;
       padding: 24px 32px;
+      opacity: 0;
       .company-name {
         color: $white;
         font-size: 1rem;
@@ -190,6 +197,11 @@ code {
             font-size: 14px;
             margin: 0;
             margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            svg {
+              margin-right: 12px;
+            }
           }
         }
         .product-drag-progress-background {

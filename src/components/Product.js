@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductImage from "../assets/product.png";
-import { useMachine } from "@xstate/react";
-import { Machine } from "xstate";
 import {
   motion,
   useSpring,
@@ -11,51 +9,44 @@ import {
 
 //svgs
 import { ReactComponent as Close } from "../assets/close.svg";
-
-const dragProductMachine = Machine({
-  id: "drag",
-  initial: "inactive",
-  states: {
-    inactive: {
-      on: { DRAG: "active" }
-    },
-    active: {
-      on: { DRAGGING: "inactive" }
-    }
-  }
-});
+import { ReactComponent as Chevron } from "../assets/chevron.svg";
+import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 
 const Product = () => {
-  let x = useSpring(0, { stiffness: 100, damping: 100, ease: "easeOut" });
-  const fadeIn = useTransform(x, [-200, 0, 200], [1, 0, 0]);
-  const fadeOut = useTransform(x, [-60, 0, 0], [0, 1, 1]);
-  const scale = useTransform(x, [-200, 0, 200], [1.25, 1, 1]);
-  const width = useTransform(x, [-1000, 0, 200], [350, 0, 0]);
-  const up = useTransform(x, [-200, 0, 200], [-60, 0, 0]);
-  const down = useTransform(x, [-200, 0, 200], [60, 0, 0]);
+  const ease = [0.6, 0.05, -0.01, 0.99];
+  let x = useSpring(0, { stiffness: 300, damping: 200, ease: ease });
+  const fadeIn = useTransform(x, [-100, 0], [1, 0]);
+  const fadeOut = useTransform(x, [-60, 0], [0, 1]);
+  const scale = useTransform(x, [-100, 0], [1.25, 1]);
+  const width = useTransform(x, [-1060, 0], [350, 0]);
+  const up = useTransform(x, [-100, 0], [-100, 0]);
+  const down = useTransform(x, [-100, 0], [100, 0]);
+
+  //state
+  const [state, setState] = useState(false);
 
   //scrolltargets
   let targetElement = document.querySelector("html");
 
-  const [state, send] = useMachine(dragProductMachine);
-
-  const closeProductDrag = () => {
-    x.stop();
-    x.set(0);
-    console.log("clicked");
-  };
-
+  // Update the state to check if the user has dragged the product
   useEffect(() => {
-    state.value === "active"
+    x.onChange(() => {
+      x.get() > -100 ? setState(false) : setState(true);
+    });
+  }, [x]);
+
+  //Setting body scroll
+  useEffect(() => {
+    state
       ? targetElement.classList.add("no-scroll")
       : targetElement.classList.remove("no-scroll");
   });
 
-  useEffect(() => {
-    x.onChange(() => {
-      x.get() > -200 ? send("DRAGGING") : send("DRAG");
-    });
-  }, [send, x]);
+  // Closing the drag product
+  const closeProductDrag = () => {
+    x.stop();
+    x.set(0);
+  };
 
   return (
     <div className='product'>
@@ -73,6 +64,7 @@ const Product = () => {
             </p>
             <div className='btn-row'>
               <button>Buy Now ($59)</button>
+              <DownArrow />
             </div>
           </motion.div>
         </div>
@@ -81,15 +73,13 @@ const Product = () => {
         <motion.div
           className='background'
           style={{ opacity: fadeIn }}></motion.div>
-        {state.value === "inactive" ? (
-          <AnimatePresence></AnimatePresence>
-        ) : (
+        {state ? (
           <AnimatePresence>
             <motion.div
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -30, opacity: 0 }}
-              transition={{ ease: "easeOut" }}
+              transition={{ ease: ease }}
               className='product-drag-header'>
               <div className='company-name'>HiFive1</div>
               <div onClick={closeProductDrag} className='close'>
@@ -97,13 +87,15 @@ const Product = () => {
               </div>
             </motion.div>
           </AnimatePresence>
+        ) : (
+          <AnimatePresence></AnimatePresence>
         )}
         <div className='product-container'>
           <motion.div
             drag='x'
             style={{ x, scale }}
             dragElastic={0.05}
-            dragConstraints={{ left: -1000, right: 0 }}
+            dragConstraints={{ left: -1060, right: 0 }}
             className='product-image'>
             <img src={ProductImage} alt='product' />
           </motion.div>
@@ -112,9 +104,9 @@ const Product = () => {
           <div className='product-drag-inner'>
             <div className='product-drag-label'>
               <motion.h6 style={{ x, opacity: fadeOut }}>
+                <Chevron />
                 Drag To Enlarge
               </motion.h6>
-              {/* {state.value === "inactive" ? state.value : state.value} */}
             </div>
             <div className='product-drag-progress-background'>
               <motion.div
