@@ -41,7 +41,13 @@ code {
       align-items: center;
       width: 100%;
       .logo {
-        font-weight: 800;
+        position: relative;
+        width: 85px;
+        display: flex;
+        align-items: center;
+        img {
+          width: 85px;
+        }
       }
       .hamburger-menu {
         width: 24px;
